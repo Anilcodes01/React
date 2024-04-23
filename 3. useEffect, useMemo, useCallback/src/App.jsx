@@ -1,35 +1,46 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from "react";
+import reactLogo from "./assets/react.svg";
+import viteLogo from "/vite.svg";
+import "./App.css";
+import axios from "axios";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [number, setNumber] = useState(1)
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+  return <>
+  <button onClick={() => {
+    setNumber(1)
+  }}>1</button>
+  <button onClick={() => {
+    setNumber(2)
+  }}>2</button>
+  <button onClick={() => {
+    setNumber(3)
+  }}>3</button>
+  <button onClick={() => {
+    setNumber(4)
+  }}>4</button>
+ <Todo id={number}/>
+  </>;
 }
 
-export default App
+function Todo({id}) {
+  const [todo, setTodo] = useState({});
+
+useEffect(() => {
+  axios.get(`https://sum-server.100xdevs.com/todo?id=${id}`)
+  .then( function(res) {
+    setTodo(res.data.todo)
+  })
+},[id])
+
+
+
+  return <div>
+    
+    <h3>{todo.title}</h3>
+    <h3>{todo.description}</h3>
+  </div>
+}
+
+export default App;
