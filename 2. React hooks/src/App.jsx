@@ -2,42 +2,49 @@ import { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
+import { memo } from "react";
+
+let counter = 4;
 
 function App() {
-  
-
   return (
     <div>
-      <HeaderWithButton />
-      <Header title={"Learning React!"} />
-      <Header title={"Learning React!"} />
-      <Header title={"Learning React!"} />
-      <Header title={"Learning React!"} />
+      <CardWrapper>
+        Hi there!
+        <p>
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. At
+          laudantium ducimus quod velit exercitationem vel sit, laborum, cumque
+          alias tempore modi! Totam deleniti fugiat ratione, repudiandae aperiam
+          neque dolorum dicta!
+        </p>
+      </CardWrapper>
+
+      <br />
+      <CardWrapper>
+        Start following your friends on Erdős to view their activity feed on the
+        homepage.
+      </CardWrapper>
+      <br />
+      <CardWrapper>
+        Progress
+        <p>It's the job that's never started as takes longest to finish</p>
+      </CardWrapper>
     </div>
   );
 }
 
-function HeaderWithButton() {
-  const [title, setTitle] = useState("My name is Anil");
-
-  function updateTitle() {
-    setTitle("My name is " + Math.random());
-
-    
-  }
-
-  return <div>
-    <button onClick={updateTitle}>Click me to change the title</button>
-      <br />
-      <br />
-      <Header title={title} />
-      <br />
-      <br />
-  </div>
-}
-
-function Header({ title }) {
-  return <div>{title}</div>;
+function CardWrapper({ children }) {
+  return (
+    <div
+      style={{
+        border: "2px solid white",
+        width: "300px",
+        padding: "10px",
+      }}
+    >
+      {children}
+    </div>
+  );
 }
 
 export default App;
