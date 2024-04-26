@@ -1,35 +1,32 @@
-import { useContext, useState } from "react";
-import { CountContext } from "./components/Context";
+import { RecoilRoot, useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
+import { countAtom } from "./Store/Atoms/Count";
 
 function App() {
-  const [count, setCount] = useState(0);
-
-  // wrap anyone that wants to use the teleported value inside a provider
   return (
     <div>
-      <CountContext.Provider value={count}>
-        <Count count={count} setCount={setCount} />
-      </CountContext.Provider>
+      <Count />
     </div>
   );
 }
 
 function CountRenderer() {
-  const count = useContext(CountContext);
+  const count = useRecoilValue(countAtom);
   return <div>{count}</div>;
 }
 
-function Count({ setCount }) {
+function Count({}) {
   return (
     <div>
-      <CountRenderer />
-      <Butttons setCount={setCount} />
+      <RecoilRoot>
+        <CountRenderer />
+        <Butttons />
+      </RecoilRoot>
     </div>
   );
 }
 
-function Butttons({ setCount }) {
-  const count = useContext(CountContext);
+function Butttons({}) {
+  const [count, setCount] = useRecoilState(countAtom);
   return (
     <div>
       <button
