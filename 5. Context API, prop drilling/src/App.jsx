@@ -1,56 +1,45 @@
-import { Suspense, useState,  } from "react";
-import React from "react";
-
-import "./App.css";
-import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
-
-const Dashboard = React.lazy(() => import('./components/Dashboard'))
-const Landing = React.lazy(() => import('./components/Landing'))
-
+import { useState } from "react";
 
 function App() {
   const [count, setCount] = useState(0);
-return (
-  <div>
-      <BrowserRouter>
-      <Appbar />
-        <Routes>
-          <Route path="/dashboard" element={<Suspense fallback={'loading...'}><Dashboard /></Suspense>} />
-          <Route path="/" element={<Suspense fallback={'loading...'}><Landing /></Suspense>} />
-        </Routes>
-      </BrowserRouter>
+  return (
+    <div>
+      <Count count={count} setCount={setCount} />
     </div>
   );
 }
 
-function Appbar() {
-  const navigate = useNavigate();
-
-  
-function DashboardPage() {
-  navigate('/dashboard')
+function CountRenderer({ count }) {
+  return <div>{count}</div>;
 }
 
-function LandingPage() {
-  navigate('/')
-}
- 
+function Count({ count, setCount }) {
   return (
     <div>
-      <div style={{ background: "yellow", display: 'flex', alignItems:'center', gap: '30px',  height: '40px'}}>
-        <button style={{height: '30px', width: '100px', borderRadius: '20px' , cursor: 'pointer'}}
-          onClick={DashboardPage}
-        >
-          Dashboard
-        </button>
-        <button style={ { height: '30px', width: '100px', borderRadius: '20px' , cursor: 'pointer', outline: 'none'}}
-          onClick={LandingPage}
-        >
-          Landing
-        </button>
-      </div>
-      </div>
-  )
+      <CountRenderer count={count} />
+      <Butttons count={count} setCount={setCount} />
+    </div>
+  );
 }
 
+function Butttons({ count, setCount }) {
+  return (
+    <div>
+      <button
+        onClick={() => {
+          setCount(count + 1);
+        }}
+      >
+        Increase
+      </button>
+      <button
+        onClick={() => {
+          setCount(count - 1);
+        }}
+      >
+        Decrease
+      </button>
+    </div>
+  );
+}
 export default App;
