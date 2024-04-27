@@ -1,7 +1,8 @@
 import { useRecoilState } from "recoil";
 import { todoListState } from "../atoms/atoms";
 
-const TodoItem = () => {
+
+const TodoItem = ({item}) => {
   const [todoList, setTodoList] = useRecoilState(todoListState);
   const index = todoList.findIndex((listItem) => listItem === item);
 
@@ -27,16 +28,20 @@ const TodoItem = () => {
 
     setTodoList(newList);
   };
+  
+  const textDecoration = item.isComplete ? 'line-through' : 'none';
 
   return (
-    <div>
-      <input type="text" value={item.text} onChange={editItemText} />
-      <input
+    <div className="ml-10 flex gap-5">
+        <input className="cursor-pointer mb-5"
         type="checkbox"
         checked={item.isComplete}
         onChange={ToggleItemCompletion}
+      
       />
-      <button onClick={deleteItem}>X</button>
+      <input className="mb-5" type="text" value={item.text} onChange={editItemText}   style={{textDecoration: textDecoration}} />
+      
+      <button className="bg-slate-500 rounded w-10 mb-5" onClick={deleteItem}>X</button>
     </div>
   );
 
