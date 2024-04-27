@@ -17,7 +17,7 @@ function App() {
 }
 
 function MainApp() {
-  const networkNotificationCount = useRecoilValue(networkAtom);
+  const [networkNotificationCount, setNetworkNotificationCount] = useRecoilState(networkAtom);
   const jobsNotificationCount = useRecoilValue(jobsAtom);
   const [messagingNotificationCount, setMessagingNotificationCount] =
     useRecoilState(messagingAtom);
@@ -49,7 +49,7 @@ function MainApp() {
       </button>
     <button>Me ({totalNotificationCount})</button>
 <IncreaseCount />
-    
+    <MyNetworkCountIncrease />
     </>
   );
 }
@@ -60,6 +60,15 @@ function IncreaseCount() {
     <button onClick={() => {
       setMessagingNotificationCount(c => c + 1)
     }}>Increase Count</button>
+  </div>
+}
+
+function MyNetworkCountIncrease() {
+  const setNetworkNotificationCount = useSetRecoilState(networkAtom)
+  return <div>
+    <button onClick={() => {
+      setNetworkNotificationCount(c => c + 1)
+    }}>Increase My Network Count</button>
   </div>
 }
 
